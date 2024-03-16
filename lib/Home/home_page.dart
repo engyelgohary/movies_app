@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/api_manger.dart';
-import 'Popular_item.dart';
+import 'popularsec/Popular_item.dart';
 import 'UpComingsection/upcoming_details.dart';
 import 'topRatedSec/toprated_widget.dart';
 
@@ -32,13 +32,18 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PopularItems(movies: movies),
-          Expanded(child: UpComing_details()),
-          TopRatedWidget(),
-        ],
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PopularItems(movies: movies),
+                        SizedBox(height:20),
+
+            UpComing_details(),
+            SizedBox(height:20),
+            TopRatedWidget(),
+          ],
+        ),
       );
   }
 }

@@ -53,7 +53,7 @@ class _PopularItemsState extends State<PopularItems> {
           Image.network(
             'https://image.tmdb.org/t/p/w500$posterPath',
             fit: BoxFit.cover,
-            height: 200,
+            height: MediaQuery.of(context).size.height*.23,
             width: MediaQuery.of(context).size.width,
           ),
           Positioned.fill(
@@ -140,7 +140,7 @@ class _PopularItemsState extends State<PopularItems> {
           );
         },
         options: CarouselOptions(
-          height: 300,
+          height: MediaQuery.of(context).size.height*.32,
           enlargeCenterPage: true,
           autoPlay: true,
           autoPlayInterval: const Duration(seconds: 5),

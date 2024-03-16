@@ -69,7 +69,7 @@ class _TopRatedWidgetState extends State<TopRatedWidget> {
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(color: MyTheme.whiteColor),),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height*.40,
+              height: MediaQuery.of(context).size.height*.38,
               child: ListView.builder(
                 //physics: NeverScrollableScrollPhysics(),
                 itemCount: data.length,

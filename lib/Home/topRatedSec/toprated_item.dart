@@ -9,7 +9,7 @@ class TopRatedItem extends StatelessWidget {
   Results results;
   TopRatedItem({
     required this.results,
-  }) ;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,24 +31,33 @@ class TopRatedItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl:
-                    "https://image.tmdb.org/t/p/w500${results.posterPath}",
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(
-                        color: MyTheme.whiteColor,
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                  )
+              Stack(
+                children: [
+                  ClipRRect(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(8)),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "https://image.tmdb.org/t/p/w500${results.posterPath}",
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: MyTheme.whiteColor,
+                            color: MyTheme.yellowColor,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      )),
+                  InkWell(
+                      onTap: () {},
+                      child: Image.asset('assets/images/bookmark.png')),
+                ],
               ),
               const SizedBox(
                 height: 7,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 10,left: 10),
+                padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Row(
                   children: [
                     const Icon(
@@ -73,7 +82,7 @@ class TopRatedItem extends StatelessWidget {
                 height: 3,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 10,left: 10),
+                padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Text(
                   results.title ?? "",
                   maxLines: 2,
@@ -87,7 +96,7 @@ class TopRatedItem extends StatelessWidget {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 10,left: 10),
+                padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Text(
                   results.releaseDate ?? "",
                   textAlign: TextAlign.end,
@@ -101,79 +110,3 @@ class TopRatedItem extends StatelessWidget {
     );
   }
 }
-
-// "https://image.tmdb.org/t/p/w500${results.posterPath}"
-/*
-  child: Column(
-          children: [
-            CachedNetworkImage(
-              imageUrl: results.posterPath??'',
-              placeholder: (context, url) =>
-                  Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => Center(
-                child: Text(
-                  "NO IMAGE",
-                  style: TextStyle(color: Colors.white, fontSize: 14),
-                ),
-              ),
-              imageBuilder: (context, imageProvider) => Container(
-                alignment: AlignmentDirectional.topStart,
-                width: double.infinity,
-                height: 128,
-                decoration: BoxDecoration(
-                  image:
-                      DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                ),
-                child: Image.asset("assets/images/add_icon.png"),
-              ),
-            ),
-            const SizedBox(
-              height: 7,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: Theme.of(context).primaryColor,
-                        size: 17,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        (results.voteAverage ?? 0).toStringAsFixed(1),
-                        style: TextStyle(fontSize: 15, color: Colors.white),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 1,
-                  ),
-                  Text(
-                    results.title ?? "",
-                    maxLines: 2,
-                    style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 13,
-                        color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 1,
-                  ),
-                  Text(
-                    results.releaseDate ?? "",
-                    style: TextStyle(
-                        fontSize: 8,
-                        color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-
-*/

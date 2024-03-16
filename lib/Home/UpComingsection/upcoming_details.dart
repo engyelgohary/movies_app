@@ -60,11 +60,25 @@ class _News_detialsState extends State<UpComing_details> {
         }
         var filmList = snapshot.data?.results ?? [];
   
-        return ListView.builder(itemBuilder: (context, index) {
-          return UpcomingItem(res: filmList[index]);
-        },
-          itemCount: filmList.length,
-          scrollDirection: Axis.horizontal,
+        return Column(
+         crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Up Coming Movies',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: MyTheme.whiteColor),),
+            ),
+        SizedBox(
+           height: MediaQuery.of(context).size.height*.17,
+
+          child: ListView.builder(itemBuilder: (context, index) {
+            return UpcomingItem(res: filmList[index]);
+          },
+            itemCount: filmList.length,
+            scrollDirection: Axis.horizontal,
+          ),
+        )
+          ],
         );
       },
     );
