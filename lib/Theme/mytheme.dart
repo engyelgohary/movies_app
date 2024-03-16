@@ -15,8 +15,7 @@ class MyTheme {
   static const Color searchColor = Color(0xff514F4F);
 
 static ThemeData lightTheme = ThemeData(
-  primaryColor:darkGrayColor,
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
         titleLarge: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
