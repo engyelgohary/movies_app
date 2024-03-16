@@ -69,7 +69,7 @@ class _News_detialsState extends State<UpComing_details> {
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(color: MyTheme.whiteColor),),
             ),
         SizedBox(
-           height: MediaQuery.of(context).size.height*.17,
+           height: MediaQuery.of(context).size.height*.27,
 
           child: ListView.builder(itemBuilder: (context, index) {
             return UpcomingItem(res: filmList[index]);
