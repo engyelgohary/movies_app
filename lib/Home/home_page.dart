@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/api_manger.dart';
-import 'package:movies_app/Theme/mytheme.dart';
-
 import 'Popular_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,16 +29,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyTheme.backgroundColor,
-      appBar: AppBar(backgroundColor: MyTheme.backgroundColor,),
-      body: SingleChildScrollView(
+    return
+       SingleChildScrollView(
         child: Column(
           children: [
             PopularItems(movies: movies),
         ],
         ),
-      ),
-    );
+      );
   }
 }
