@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/upcoming_api.dart';
-import 'package:movies_app/Home/Recommendedsection/upcoming_item.dart';
 import 'package:movies_app/Model/upcomingfilm.dart';
 import 'package:movies_app/Theme/mytheme.dart';
+import 'upcoming_item.dart';
 
 
 class UpComing_details extends StatefulWidget {
