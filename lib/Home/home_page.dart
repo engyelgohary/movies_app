@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/Api/api_manger.dart';
 import 'Popular_item.dart';
 import 'UpComingsection/upcoming_details.dart';
+import 'topRatedSec/toprated_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           PopularItems(movies: movies),
           Expanded(child: UpComing_details()),
+          TopRatedWidget(),
         ],
       );
   }

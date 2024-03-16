@@ -140,7 +140,7 @@ class _PopularItemsState extends State<PopularItems> {
           );
         },
         options: CarouselOptions(
-          height: 400,
+          height: 300,
           enlargeCenterPage: true,
           autoPlay: true,
           autoPlayInterval: const Duration(seconds: 5),
