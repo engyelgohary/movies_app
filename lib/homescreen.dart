@@ -7,6 +7,7 @@ import 'package:movies_app/WatchList/watchlist_page.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home';
+  
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
