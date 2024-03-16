@@ -22,8 +22,8 @@ class _TopRatedWidgetState extends State<TopRatedWidget> {
       builder: (context, snapshot) {
         if (snapshot.connectionState==ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator(
-            color: MyTheme.whiteColor,
-          ));
+   backgroundColor: MyTheme.whiteColor,
+              color: MyTheme.yellowColor,          ));
         } else if (snapshot.hasError){
           return Center(
             child: Column(
