@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/Home/movie_details/details_screen.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 import '../../Api/toprated_api.dart';
 import '../../model/toprated.dart';
@@ -8,6 +9,7 @@ import 'toprated_item.dart';
 
 class TopRatedWidget extends StatefulWidget {
   static const String routeName = '';
+  
   const TopRatedWidget({super.key});
 
   @override
@@ -65,7 +67,7 @@ class _TopRatedWidgetState extends State<TopRatedWidget> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Top Rated Movies',
+              child: Text('Recommended',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(color: MyTheme.whiteColor),),
             ),
             SizedBox(
@@ -76,7 +78,15 @@ class _TopRatedWidgetState extends State<TopRatedWidget> {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return TopRatedItem(results: data[index],);
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                       CupertinoPageRoute(builder: (context) => DetailsScreen(
+                        movieId:data[index].id!,
+                        
+                        ),));
+                    },
+                    child: TopRatedItem(results: data[index],));
                 },),
             ),
           ],
