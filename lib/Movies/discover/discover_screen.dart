@@ -16,6 +16,31 @@ class DiscoverMovie extends StatefulWidget {
 }
 
 class _DiscoverMovieState extends State<DiscoverMovie> {
+  List<MovieDiscover> allPages = [];
+  int page = 1;
+  @override
+  void initState() {
+    super.initState();
+    loadAllPages();
+  }
+
+  Future<void> loadAllPages() async {
+    try {
+      int page = 1;
+      while (true) {
+        var movieDiscover = await ApiManager.getMoviesDiscover(page: page);
+        allPages.add(movieDiscover);
+        if (movieDiscover.page == movieDiscover.totalPages) {
+          break;
+        }
+        page++;
+      }
+      setState(() {});
+    } catch (e) {
+      print('Error loading pages: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,22 +49,20 @@ class _DiscoverMovieState extends State<DiscoverMovie> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Text(
-           "Action",
+            "Action",
             style:TextStyle(fontSize: 25,color: Colors.white),
           ),
 
-
-
           Expanded(
             child: FutureBuilder<MovieDiscover>(
-              future: ApiManager.getMoviesDiscover(),
+              future: ApiManager.getMoviesDiscover(page: page),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                       child: CircularProgressIndicator(
-                    backgroundColor: MyTheme.whiteColor,
-                    color: MyTheme.yellowColor,
-                  ));
+                        backgroundColor: MyTheme.whiteColor,
+                        color: MyTheme.yellowColor,
+                      ));
                 } else if (snapshot.hasError) {
                   return Center(
                     child: Column(
@@ -54,7 +77,7 @@ class _DiscoverMovieState extends State<DiscoverMovie> {
                         ),
                         IconButton(
                           onPressed: () {
-                            ApiManager.getMoviesDiscover();
+                            ApiManager.getMoviesDiscover(page: page);
                             setState(() {});
                           },
                           icon: const Icon(Icons.replay_outlined),
@@ -78,7 +101,7 @@ class _DiscoverMovieState extends State<DiscoverMovie> {
                         ),
                         IconButton(
                             onPressed: () {
-                              ApiManager.getMoviesDiscover();
+                              ApiManager.getMoviesDiscover(page: page);
                               setState(() {});
                             },
                             icon: const Icon(Icons.replay_outlined,

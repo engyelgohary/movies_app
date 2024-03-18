@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> tabs =[
     HomePage(),
     SearchPage(),
-    DiscoverMovie(),
+    MoviesPage(),
     WatchlistPage()
   ];
 

@@ -21,7 +21,7 @@ class DiscoverMovieItem extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: CachedNetworkImage(
-              imageUrl: 'https://image.tmdb.org/t/p/w500${movies.posterPath ?? ""}'             ,
+              imageUrl: 'https://image.tmdb.org/t/p/w500${movies.backdropPath ?? ""}'             ,
               width: double.infinity,
               fit: BoxFit.fill,
               height: MediaQuery.of(context).size.height,
