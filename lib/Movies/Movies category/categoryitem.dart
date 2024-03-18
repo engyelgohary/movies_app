@@ -4,7 +4,8 @@ import 'package:movies_app/model/ListsMovies.dart';
 
 class CategoryItem extends StatelessWidget {
 Genres movies;
-CategoryItem({required this.movies});
+int index;
+CategoryItem({required this.movies,required this.index});
   @override
   Widget build(BuildContext context) {
     return Stack(

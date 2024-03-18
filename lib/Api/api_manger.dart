@@ -28,8 +28,8 @@ class ApiManager {
     }
   }
 
-  static Future<MovieDiscover> getMoviesDiscover({required int page}) async {
-    Uri url = Uri.parse('$baseUrl/discover/movie?api_key=$apiKey&page=$page');
+  static Future<MovieDiscover> getMoviesDiscover() async {
+    Uri url = Uri.parse('$baseUrl/discover/movie?api_key=$apiKey');
     try {
       var response = await http.get(url);
       if (response.statusCode == 200) {

@@ -6,7 +6,7 @@ import 'package:movies_app/Theme/mytheme.dart';
 
 class DiscoverMovieItem extends StatelessWidget {
   static  String routeName = 'movies';
-  late Results movies;
+  Results movies;
 
   DiscoverMovieItem({super.key, required this.movies});
 
@@ -15,7 +15,6 @@ class DiscoverMovieItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         SizedBox(
           height: 150,
           child: ClipRRect(

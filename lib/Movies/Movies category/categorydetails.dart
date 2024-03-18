@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/api_listsmovies.dart';
-import 'package:movies_app/Movies/categoryitem.dart';
+import 'package:movies_app/Movies/Movies%20category/categoryitem.dart';
 
-import '../Theme/mytheme.dart';
-import '../model/ListsMovies.dart';
+import '../../Theme/mytheme.dart';
+import '../../model/ListsMovies.dart';
 
 class Category_details extends StatefulWidget {
+  Function clickItem;
+  Category_details({required this.clickItem});
   @override
   State<Category_details> createState() => _Category_detialsState();
 }
 
 class _Category_detialsState extends State<Category_details> {
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ListsMovies?>(
@@ -58,7 +61,11 @@ class _Category_detialsState extends State<Category_details> {
         return GridView.builder(
             gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing:5 ,mainAxisSpacing:5 ,),
             itemBuilder:(context, index) {
-              return CategoryItem(movies: genres[index]);
+              return InkWell(
+                onTap: (){
+                  widget.clickItem(genres[index]);
+                },
+                  child: CategoryItem(movies: genres[index],index: index,));
             },
         itemCount: genres.length,
         );
