@@ -12,10 +12,10 @@ class UpComing_details extends StatefulWidget {
 
 
   @override
-  State<UpComing_details> createState() => _News_detialsState();
+  State<UpComing_details> createState() => _UpComing_detialsState();
 }
 
-class _News_detialsState extends State<UpComing_details> {
+class _UpComing_detialsState extends State<UpComing_details> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Upcomingfilm?>(
