@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:movies_app/Model/MovieDiscover.dart';
 
 class ApiManager {
+  static const String apiKey = '02f2d0cc900775cf6f1018b35e266f3c';
+  static const String baseUrl = 'https://api.themoviedb.org/3';
+
   static Future<List<Map<String, dynamic>>?> getMovies({required int page}) async {
     String apiKey = '02f2d0cc900775cf6f1018b35e266f3c';
     Uri url = Uri.https(
@@ -23,4 +27,20 @@ class ApiManager {
       return null;
     }
   }
-}
+
+  static Future<MovieDiscover> getMoviesDiscover({required int page}) async {
+    Uri url = Uri.parse('$baseUrl/discover/movie?api_key=$apiKey&page=$page');
+    try {
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        return MovieDiscover.fromJson(json);
+      } else {
+        throw Exception('Failed to load movies: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+
+    }}
+
+  }
