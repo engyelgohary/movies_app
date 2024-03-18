@@ -56,7 +56,7 @@ class _Category_detialsState extends State<Category_details> {
         var genres = Genres.getlistsofMovies();
 
         return GridView.builder(
-            gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing:15 ,mainAxisSpacing:15 ,),
+            gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing:5 ,mainAxisSpacing:5 ,),
             itemBuilder:(context, index) {
               return CategoryItem(movies: genres[index]);
             },
