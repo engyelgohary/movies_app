@@ -3,16 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:movies_app/Api/similar_api.dart';
-import 'package:movies_app/Home/movie_details/Similar_item.dart';
+import 'package:movies_app/Home/similar/Similar_item.dart';
 import 'package:movies_app/Model/smiler_model.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 
 class SimilarWidget extends StatefulWidget {
   static const String routeName = '';
-  SimilarResults results;
-  SimilarWidget({
+int movieId;
+   SimilarWidget({
     Key? key,
-    required this.results,
+    required this.movieId,
   }) : super(key: key);
 
   @override
@@ -20,10 +20,24 @@ class SimilarWidget extends StatefulWidget {
 }
 
 class _SimilarWidgetState extends State<SimilarWidget> {
+  SimilarApi movieDetailsApi = SimilarApi();
+  late Future<SimilarModel> movieDetails;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMovieDetails();
+  }
+
+  fetchMovieDetails() {
+    movieDetails = SimilarApi.getSimilarMovies(widget.movieId);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<SimilarModel>(
-      future: SimilarApi.getSimilarMovies(widget.results.id!),
+      future: SimilarApi.getSimilarMovies(widget.movieId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -44,7 +58,7 @@ class _SimilarWidgetState extends State<SimilarWidget> {
                 ),
                 IconButton(
                   onPressed: () {
-                    SimilarApi.getSimilarMovies(widget.results.id!);
+                    SimilarApi.getSimilarMovies(widget.movieId);
                     setState(() {});
                   },
                   icon: const Icon(Icons.replay_outlined),
@@ -68,7 +82,7 @@ class _SimilarWidgetState extends State<SimilarWidget> {
                 ),
                 IconButton(
                     onPressed: () {
-                      SimilarApi.getSimilarMovies(widget.results.id!);
+                      SimilarApi.getSimilarMovies(widget.movieId);
                       setState(() {});
                     },
                     icon: const Icon(Icons.replay_outlined,

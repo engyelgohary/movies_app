@@ -7,7 +7,6 @@ class SimilarApi{
     Uri url = Uri.https(SimilarConstant.baseUrl,'/3/movie/${mId}/similar',
         {
           'api_key' :SimilarConstant.apiKey,
-          'movie_id': mId
         }
     );
     try {

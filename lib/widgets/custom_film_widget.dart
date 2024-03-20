@@ -6,15 +6,15 @@ import 'package:movies_app/Theme/mytheme.dart';
 
 class CustomFilmWidget extends StatelessWidget {
 String imagePath;
-String voteAverage;
-String title;
-String releaseDate;
+String? voteAverage;
+String ?title;
+String? releaseDate;
    CustomFilmWidget({
     Key? key,
     required this.imagePath,
-    required this.voteAverage,
-    required this.title,
-    required this.releaseDate,
+     this.voteAverage,
+     this.title,
+     this.releaseDate,
   }) : super(key: key);
 
   @override
@@ -75,7 +75,7 @@ String releaseDate;
                       width: 5,
                     ),
                     Text(
-                      voteAverage,
+                      voteAverage??'',
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
@@ -90,7 +90,7 @@ String releaseDate;
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Text(
-                  title,
+                  title??'',
                   maxLines: 2,
                   style: Theme.of(context)
                       .textTheme
@@ -104,7 +104,7 @@ String releaseDate;
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Text(
-                  releaseDate,
+                  releaseDate??'',
                   textAlign: TextAlign.end,
                   style: TextStyle(fontSize: 10, color: MyTheme.whiteColor),
                 ),

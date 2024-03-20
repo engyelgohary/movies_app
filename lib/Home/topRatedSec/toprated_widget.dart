@@ -73,7 +73,6 @@ class _TopRatedWidgetState extends State<TopRatedWidget> {
             SizedBox(
               height: MediaQuery.of(context).size.height*.38,
               child: ListView.builder(
-                //physics: NeverScrollableScrollPhysics(),
                 itemCount: data.length,
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
