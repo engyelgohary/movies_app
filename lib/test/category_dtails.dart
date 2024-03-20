@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/Api/api_manger.dart'; // استيراد ملف الاستدعاء للأفلام بواسطة الفئة
+import 'package:movies_app/Api/api_manger.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 import 'package:movies_app/Movies/discover/discover_item.dart';
 
