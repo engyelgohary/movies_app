@@ -5,6 +5,7 @@ import 'package:movies_app/Movies/movies_page.dart';
 import 'package:movies_app/Search/search_page.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 import 'package:movies_app/WatchList/watchlist_page.dart';
+import 'package:movies_app/test/test.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home';
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedindex = 0;
   List<Widget> tabs =[
-    HomePage(),
+    Test(),
     SearchPage(),
     MoviesPage(),
     WatchlistPage()

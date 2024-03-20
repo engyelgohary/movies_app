@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:movies_app/Model/MovieDiscover.dart';
+
+import '../Model/MovieDiscover.dart';
 
 class ApiManager {
   static const String apiKey = '02f2d0cc900775cf6f1018b35e266f3c';
@@ -42,5 +43,31 @@ class ApiManager {
       throw Exception('Error: $e');
 
     }}
+  static Future<List<Results>> fetchMoviesByCategory(int categoryId) async {
+    final String apiKey = '02f2d0cc900775cf6f1018b35e266f3c';
+    final String baseUrl = 'https://api.themoviedb.org/3';
 
+    final Uri url = Uri.parse('$baseUrl/discover/movie?api_key=$apiKey&with_genres=$categoryId');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        List<Results> movies = []; // List to store the fetched movies
+
+        // Parse the JSON data and create a list of Movie objects
+        for (var item in jsonData['results']) {
+          movies.add(Results.fromJson(item));
+        }
+
+        return movies;
+      } else {
+        throw Exception('Failed to load movies');
+      }
+    } catch (e) {
+      throw Exception('Error fetching movies: $e');
+    }
   }
+}
+
