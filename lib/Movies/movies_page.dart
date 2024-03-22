@@ -36,10 +36,12 @@ class _MoviesPageState extends State<MoviesPage> {
     );
   }
 
-  Genres? selectedItem;
+  MovieGenre? selectedItem;
 
-  void clickItem(Genres newSelectedItem) {
+  void clickItem(MovieGenre newSelectedItem) {
     selectedItem = newSelectedItem;
-    Navigator.of(context).pushNamed(DiscoverMovie.routeName);
+    Navigator.of(context).pushNamed(DiscoverMovie.routeName,
+    arguments: MovieGenre(id: selectedItem!.id, name: selectedItem!.name)
+    );
   }
 }

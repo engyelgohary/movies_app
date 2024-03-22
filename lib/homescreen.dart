@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedindex = 0;
   List<Widget> tabs =[
-    Test(),
+    HomePage(),
     SearchPage(),
     MoviesPage(),
     WatchlistPage()

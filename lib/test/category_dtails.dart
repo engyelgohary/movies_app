@@ -5,16 +5,16 @@ import 'package:movies_app/Movies/discover/discover_item.dart';
 
 import '../Model/MovieDiscover.dart';
 
-class CategoryDetails extends StatefulWidget {
+class CategoryItem extends StatefulWidget {
   final int categoryId;
 
-  const CategoryDetails({Key? key, required this.categoryId}) : super(key: key);
+  const CategoryItem({Key? key, required this.categoryId}) : super(key: key);
 
   @override
-  State<CategoryDetails> createState() => _CategoryDetailsState();
+  State<CategoryItem> createState() => _CategoryItemState();
 }
 
-class _CategoryDetailsState extends State<CategoryDetails> {
+class _CategoryItemState extends State<CategoryItem> {
   late Future<List<Results>> _moviesFuture;
 
   @override

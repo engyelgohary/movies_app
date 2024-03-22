@@ -43,94 +43,92 @@ class _DiscoverMovieState extends State<DiscoverMovie> {
 
   @override
   Widget build(BuildContext context) {
-    // Genres args = ModalRoute.of(context)?.settings.arguments as Genres;
+    MovieGenre args = ModalRoute.of(context)?.settings.arguments as MovieGenre;
     return Scaffold(
       backgroundColor: MyTheme.backgroundColor,
       appBar: AppBar(
         backgroundColor: MyTheme.bottomColor,
+        title: Text(args.name),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: FutureBuilder<MovieDiscover>(
-                future: ApiManager.getMoviesDiscover(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: MyTheme.whiteColor,
-                          color: MyTheme.yellowColor,
-                        ));
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'SomeThing went wrong',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(color: MyTheme.whiteColor),
-                          ),
-                          IconButton(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: FutureBuilder<MovieDiscover>(
+              future: ApiManager.getMoviesDiscover(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: MyTheme.whiteColor,
+                        color: MyTheme.yellowColor,
+                      ));
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'SomeThing went wrong',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(color: MyTheme.whiteColor),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            ApiManager.getMoviesDiscover();
+                            setState(() {});
+                          },
+                          icon: const Icon(Icons.replay_outlined),
+                          color: MyTheme.whiteColor,
+                        )
+                      ],
+                    ),
+                  );
+                }
+                if (snapshot.data!.results == 7) {
+                  Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${snapshot.data!}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(color: MyTheme.whiteColor),
+                        ),
+                        IconButton(
                             onPressed: () {
                               ApiManager.getMoviesDiscover();
                               setState(() {});
                             },
-                            icon: const Icon(Icons.replay_outlined),
-                            color: MyTheme.whiteColor,
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                  if (snapshot.data!.results == 7) {
-                    Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${snapshot.data!}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(color: MyTheme.whiteColor),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                ApiManager.getMoviesDiscover();
-                                setState(() {});
-                              },
-                              icon: const Icon(Icons.replay_outlined,
-                                  color: MyTheme.whiteColor))
-                        ],
-                      ),
-                    );
-                  }
-                  var data = snapshot.data?.results ?? [];
-                  return GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10.0,
-                      crossAxisSpacing: 5.0,
+                            icon: const Icon(Icons.replay_outlined,
+                                color: MyTheme.whiteColor))
+                      ],
                     ),
-                    itemCount: data.length,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) {
-                      return DiscoverMovieItem(
-                        movies: data[index],
-                      );
-                    },
                   );
-                },
-              ),
+                }
+                var data = snapshot.data?.results ?? [];
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 5.0,
+                  ),
+                  itemCount: data.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return DiscoverMovieItem(
+                      movies: data[index],
+                    );
+                  },
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

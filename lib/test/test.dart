@@ -6,15 +6,14 @@ import 'category_dtails.dart';
 class MovieGenre {
   final int id;
   final String name;
-  final String imageName;
 
-  MovieGenre({required this.id, required this.name, required this.imageName});
+  MovieGenre({required this.id, required this.name});
 
   factory MovieGenre.fromJson(Map<String, dynamic> json) {
     return MovieGenre(
       id: json['id'],
-      name: json['name'],
-      imageName: 'assets/images/${json['id']}.png', );
+      name: json['name']
+    );
   }
 }
 class Test extends StatelessWidget {
@@ -58,7 +57,7 @@ class Test extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CategoryDetails(categoryId: genre.id),
+                          builder: (context) => CategoryItem(categoryId: genre.id),
                         ),
                       );
                     },
@@ -66,7 +65,7 @@ class Test extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Image.asset(
-                            genre.imageName,
+                            "assets/images/Poster.jpg",
                             fit: BoxFit.cover,
                           ),
                         ),
