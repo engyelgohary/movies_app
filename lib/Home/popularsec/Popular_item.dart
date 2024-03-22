@@ -145,7 +145,7 @@ class _PopularItemsState extends State<PopularItems> {
                           InkWell(
                             onTap: () {
                   Navigator.push(context, CupertinoPageRoute
-                  (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],)));
+                  (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
                             },
                             child: Container(
                               height: 150,

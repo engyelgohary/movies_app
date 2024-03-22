@@ -75,7 +75,7 @@ class _News_detialsState extends State<UpComing_details> {
           child: ListView.builder(itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder:(context) => DetailsScreen(movieId: filmList[index].id!),));
+                Navigator.push(context, MaterialPageRoute(builder:(context) => DetailsScreen(movieId: filmList[index].id!,movieName: filmList[index].originalTitle!),));
               },
               child: UpcomingItem(res: filmList[index]));
           },

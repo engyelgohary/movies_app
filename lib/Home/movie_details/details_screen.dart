@@ -12,11 +12,13 @@ import 'package:movies_app/Theme/mytheme.dart';
 
 class DetailsScreen extends StatefulWidget {
   int movieId;
+  String movieName;
   MovieDetailsModel? model;
   DetailsScreen({
     Key? key,
     this.model,
     required this.movieId,
+    required this.movieName,
   }) : super(key: key);
 
   @override
@@ -30,11 +32,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   void initState() {
     super.initState();
-    fetchMovieDetails();
+    fetchMovieDetails(widget.movieName);
   }
 
-  fetchMovieDetails() {
-    movieDetails = MovieDetailsApi.getMovieDetails(widget.movieId);
+  fetchMovieDetails(String movieName) {
+    movieDetails = MovieDetailsApi.getMovieDetails(widget.movieId,widget.movieName);
     setState(() {});
   }
 
@@ -43,8 +45,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
         backgroundColor: MyTheme.backgroundColor,
         appBar: AppBar(
-          title: Text(widget.model?.title??''
-          ,style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: MyTheme.whiteColor),),
+          centerTitle: true,
+          title: Text(widget.movieName
+          ,style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: MyTheme.whiteColor,fontWeight:FontWeight.bold,fontSize: 20),),
           backgroundColor: Colors.transparent,
           leading: IconButton(
               onPressed: () {
