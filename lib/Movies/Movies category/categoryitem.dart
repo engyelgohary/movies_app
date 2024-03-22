@@ -17,7 +17,6 @@ class CategoryItem extends StatefulWidget {
 
 class _CategoryItemState extends State<CategoryItem> {
   late Future<List<Results>> _moviesFuture;
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +29,15 @@ class _CategoryItemState extends State<CategoryItem> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Results>>(
+    return Scaffold(
+      backgroundColor: MyTheme.backgroundColor,
+        appBar: AppBar(
+        backgroundColor: Colors.white,
+        title:  const Text(
+          'Browse Category'
+        ),
+    ),
+   body:   FutureBuilder<List<Results>>(
       future: _moviesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -61,19 +68,22 @@ class _CategoryItemState extends State<CategoryItem> {
             child: Text('No movies found'),
           );
         } else {
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
+          return Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing:10,
+                mainAxisSpacing:10,
+              ),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return DiscoverMovieItem(movies: snapshot.data![index]);
+              },
             ),
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              return DiscoverMovieItem(movies: snapshot.data![index]);
-            },
           );
         }
       },
-    );
+    ));
   }
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/Home/home_page.dart';
-import 'package:movies_app/Movies/discover/discover_screen.dart';
 import 'package:movies_app/Movies/movies_page.dart';
 import 'package:movies_app/Search/search_page.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 import 'package:movies_app/WatchList/watchlist_page.dart';
-import 'package:movies_app/test/test.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home';

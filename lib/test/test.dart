@@ -37,7 +37,7 @@ class Test extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Movie Genres'),
+          title: const Text('Movie Genres'),
         ),
         body: FutureBuilder<List<MovieGenre>>(
           future: fetchGenres(),
