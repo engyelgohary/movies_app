@@ -6,34 +6,33 @@ import 'package:movies_app/Theme/mytheme.dart';
 
 class DiscoverMovieItem extends StatelessWidget {
   static  String routeName = 'movies';
-  late Results movies;
+  Results movies;
 
   DiscoverMovieItem({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-
-        SizedBox(
-          height: 150,
-          child: ClipRRect(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: CachedNetworkImage(
               imageUrl: 'https://image.tmdb.org/t/p/w500${movies.backdropPath ?? ""}'             ,
               width: double.infinity,
               fit: BoxFit.fill,
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height*.17,
               placeholder: (context, url) =>
-              const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+               const Center(child: CircularProgressIndicator(
+                 backgroundColor: MyTheme.whiteColor,
+                 color: MyTheme.yellowColor,
+              )),
+              errorWidget: (context, url, error) => const Icon(Icons.error,color: MyTheme.yellowColor,
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 10,),
-        Expanded(
-          child: Center(
+          const SizedBox(height: 10,),
+          Center(
             child: Text(
               movies.originalTitle??"",
               style: Theme.of(context)
@@ -42,8 +41,8 @@ class DiscoverMovieItem extends StatelessWidget {
                   ?.copyWith(color: MyTheme.whiteColor),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
