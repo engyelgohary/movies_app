@@ -5,8 +5,6 @@ import 'package:movies_app/Theme/mytheme.dart';
 import '../../model/ListsMovies.dart';
 
 class Category_details extends StatefulWidget {
-  Function clickItem;
-  Category_details({required this.clickItem});
   @override
   State<Category_details> createState() => _Category_detialsState();
 }
@@ -33,17 +31,15 @@ class _Category_detialsState extends State<Category_details> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CategoryItem(categoryId: genre.id),
+                      builder: (context) => CategoryItem(categoryId: genre.id,categoryName: genre.name,),
                     ),
                   );
                 },
                 child: Stack(
                   children: [
-                    Expanded(
-                      child: Image.asset(
-                        "assets/images/Poster.jpg",
-                        fit: BoxFit.cover,
-                      ),
+                    Image.asset(
+                      "assets/images/Poster.jpg",
+                      fit: BoxFit.cover,
                     ),
                     Center(
                       child: Text(
@@ -62,7 +58,10 @@ class _Category_detialsState extends State<Category_details> {
           );
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              backgroundColor: MyTheme.whiteColor,
+              color: MyTheme.yellowColor,
+            ),
           );
         }
       },

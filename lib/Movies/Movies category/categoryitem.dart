@@ -7,9 +7,11 @@ import '../../Model/MovieDiscover.dart';
 
 
 class CategoryItem extends StatefulWidget {
+  static String routeName = "categpry";
   final int categoryId;
+  final String categoryName;
 
-  const CategoryItem({Key? key, required this.categoryId}) : super(key: key);
+  const CategoryItem({Key? key, required this.categoryId,required this.categoryName}) : super(key: key);
 
   @override
   State<CategoryItem> createState() => _CategoryItemState();
@@ -20,10 +22,10 @@ class _CategoryItemState extends State<CategoryItem> {
   @override
   void initState() {
     super.initState();
-    _moviesFuture = _fetchMoviesByCategory(widget.categoryId);
+    _moviesFuture = _fetchMoviesByCategory(widget.categoryId,widget.categoryName);
   }
 
-  Future<List<Results>> _fetchMoviesByCategory(int categoryId) async {
+  Future<List<Results>> _fetchMoviesByCategory(int categoryId,String categoryName) async {
     return await ApiManager.fetchMoviesByCategory(categoryId);
   }
 
@@ -31,13 +33,12 @@ class _CategoryItemState extends State<CategoryItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyTheme.backgroundColor,
-        appBar: AppBar(
-        backgroundColor: Colors.white,
-        title:  const Text(
-          'Browse Category'
-        ),
-    ),
-   body:   FutureBuilder<List<Results>>(
+      appBar: AppBar(
+     backgroundColor: MyTheme.bottomColor,
+        title: Text(widget.categoryName,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+        centerTitle: true,
+      ),
+     body: FutureBuilder<List<Results>>(
       future: _moviesFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -55,7 +56,7 @@ class _CategoryItemState extends State<CategoryItem> {
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      _moviesFuture = _fetchMoviesByCategory(widget.categoryId);
+                      _moviesFuture = _fetchMoviesByCategory(widget.categoryId,widget.categoryName);
                     });
                   },
                   child: const Text('Try Again'),

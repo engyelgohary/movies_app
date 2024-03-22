@@ -30,18 +30,10 @@ class _MoviesPageState extends State<MoviesPage> {
                 .copyWith(color: MyTheme.whiteColor, fontSize: 24),)),
         Expanded(
             child:
-            Category_details(clickItem: clickItem)
+            Category_details()
         )
       ],
     );
   }
 
-  MovieGenre? selectedItem;
-
-  void clickItem(MovieGenre newSelectedItem) {
-    selectedItem = newSelectedItem;
-    Navigator.of(context).pushNamed(DiscoverMovie.routeName,
-    arguments: MovieGenre(id: selectedItem!.id, name: selectedItem!.name)
-    );
-  }
 }

@@ -93,7 +93,9 @@ class _PopularItemsState extends State<PopularItems> {
           child: CarouselSlider.builder(
             itemCount: widget.movies.length,
             itemBuilder: (BuildContext context, int index, int realIndex) {
-              String posterPath = widget.movies[index]['poster_path'];
+              String posterPath = widget.movies[index]['backdrop_path'];
+              String posterPath1 = widget.movies[index]['poster_path'];
+
               return Container(
                 color: Colors.transparent,
                 child: Stack(
@@ -139,7 +141,7 @@ class _PopularItemsState extends State<PopularItems> {
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  'https://image.tmdb.org/t/p/w500$posterPath',
+                                  'https://image.tmdb.org/t/p/w500$posterPath1',
                                 ),
                                 fit: BoxFit.fill,
                               ),
