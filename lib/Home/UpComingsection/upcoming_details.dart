@@ -23,7 +23,7 @@ class _UpComing_detialsState extends State<UpComing_details> {
       future: ApiRecommended.getUpFilms(),
       builder: (context, snapshot) {
         if(snapshot.connectionState==ConnectionState.waiting){
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(
               backgroundColor: MyTheme.whiteColor,
               color: MyTheme.yellowColor,

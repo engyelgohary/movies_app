@@ -52,7 +52,7 @@ String? releaseDate;
                           ),
                         ),
                         errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                            Center(child: const Icon(Icons.error,size: 50,color: MyTheme.grayColor,)),
                       )),
                   InkWell(
                       onTap: () {},
