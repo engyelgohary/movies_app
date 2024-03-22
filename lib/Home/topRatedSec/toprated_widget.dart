@@ -81,7 +81,7 @@ class _TopRatedWidgetState extends State<TopRatedWidget> {
                     onTap: () {
                       Navigator.push(context,
                        CupertinoPageRoute(builder: (context) => DetailsScreen(
-                        movieId:data[index].id!,
+                        movieId:data[index].id!,movieName: data[index].originalTitle!,
                         
                         ),));
                     },
