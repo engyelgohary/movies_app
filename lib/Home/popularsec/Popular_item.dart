@@ -55,19 +55,11 @@ class _PopularItemsState extends State<PopularItems> {
     if (posterPath != null && posterPath.isNotEmpty) {
       return Stack(
         children: [
-          InkWell(
-              // onTap: () {
-              //         Navigator.push(context,
-              //          MaterialPageRoute(builder: (context) =>
-              //           DetailsScreen(movieId:),));
-              //       },
-           
-            child: CachedNetworkImage(
-              imageUrl: 'https://image.tmdb.org/t/p/w500$posterPath',
-              fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.height*.23,
-              width: MediaQuery.of(context).size.width,
-            ),
+          CachedNetworkImage(
+            imageUrl: 'https://image.tmdb.org/t/p/w500$posterPath',
+            fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height*.23,
+            width: MediaQuery.of(context).size.width,
           ),
           Positioned.fill(
             bottom: 100,
@@ -104,13 +96,21 @@ class _PopularItemsState extends State<PopularItems> {
             itemCount: widget.movies.length,
             itemBuilder: (BuildContext context, int index, int realIndex) {
               String posterPath = widget.movies[index]['poster_path'];
+              String coverPath = widget.movies[index]['backdrop_path'];
+
               return Container(
                 color: Colors.transparent,
                 child: Stack(
                   children: [
                     // Larger Movie Poster
-                    Positioned.fill(
-                      child: _buildPoster(posterPath, context),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context, CupertinoPageRoute
+                          (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
+                      },
+                      child: Positioned.fill(
+                        child: _buildPoster(coverPath, context),
+                      ),
                     ),
                     Positioned(
                       top: 210,
