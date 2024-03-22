@@ -45,8 +45,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PopularItems(movies: movies),
-                        SizedBox(height:20),
-
+            SizedBox(height:20),
             UpComing_details(),
             SizedBox(height:20),
             TopRatedWidget(),

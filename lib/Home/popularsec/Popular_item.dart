@@ -98,87 +98,88 @@ class _PopularItemsState extends State<PopularItems> {
               String posterPath = widget.movies[index]['poster_path'];
               String coverPath = widget.movies[index]['backdrop_path'];
 
-              return Container(
-                color: Colors.transparent,
-                child: Stack(
-                  children: [
-                    // Larger Movie Poster
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(context, CupertinoPageRoute
-                          (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
-                      },
-                      child: Positioned.fill(
-                        child: _buildPoster(coverPath, context),
-                      ),
-                    ),
-                    Positioned(
-                      top: 210,
-                      left: 150,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.movies[index]['title'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+              return InkWell(
+              onTap: () {
+        Navigator.push(context, CupertinoPageRoute
+          (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
+      },
+                child: Container(
+                  color: Colors.transparent,
+                  child: Stack(
+                    children: [
+                      // Larger Movie Poster
+                         Positioned.fill(
+                          child: _buildPoster(coverPath, context),
+                        ),
+
+                      Positioned(
+                        top: 210,
+                        left: 150,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.movies[index]['title'],
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            widget.movies[index]['release_date'],
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
+                            const SizedBox(height: 5),
+                            Text(
+                              widget.movies[index]['release_date'],
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    // Smaller Movie Poster
-                    Positioned(
-                      top: 130,
-                      left: 13,
-                      child: Stack(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                  Navigator.push(context, CupertinoPageRoute
-                  (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
-                            },
-                            child: Container(
-                              height: 150,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    'https://image.tmdb.org/t/p/w500$posterPath',
+                      // Smaller Movie Poster
+                      Positioned(
+                        top: 130,
+                        left: 13,
+                        child: Stack(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                    Navigator.push(context, CupertinoPageRoute
+                    (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
+                              },
+                              child: Container(
+                                height: 150,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      'https://image.tmdb.org/t/p/w500$posterPath',
+                                    ),
+                                    fit: BoxFit.fill,
                                   ),
-                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  isBookmarked = !isBookmarked;
-                                });
-                              },
-                              child: isBookmarked
-                                  ? Image.asset('assets/images/select.png')
-                                  : Image.asset('assets/images/bookmark.png'),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    isBookmarked = !isBookmarked;
+                                  });
+                                },
+                                child: isBookmarked
+                                    ? Image.asset('assets/images/select.png')
+                                    : Image.asset('assets/images/bookmark.png'),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
