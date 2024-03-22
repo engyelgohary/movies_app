@@ -22,7 +22,6 @@ class _MoviesPageState extends State<MoviesPage> {
                 .height * .07, left: 10, bottom: 10),
             child: Text(
             'Browse Category'
-
               , style: Theme
                 .of(context)
                 .textTheme

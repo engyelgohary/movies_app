@@ -12,34 +12,37 @@ class DiscoverMovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: CachedNetworkImage(
-            imageUrl: 'https://image.tmdb.org/t/p/w500${movies.backdropPath ?? ""}'             ,
-            width: double.infinity,
-            fit: BoxFit.fill,
-            height: MediaQuery.of(context).size.height*.17,
-            placeholder: (context, url) =>
-             const Center(child: CircularProgressIndicator(
-               backgroundColor: MyTheme.whiteColor,
-               color: MyTheme.yellowColor,
-            )),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: CachedNetworkImage(
+              imageUrl: 'https://image.tmdb.org/t/p/w500${movies.backdropPath ?? ""}'             ,
+              width: double.infinity,
+              fit: BoxFit.fill,
+              height: MediaQuery.of(context).size.height*.17,
+              placeholder: (context, url) =>
+               const Center(child: CircularProgressIndicator(
+                 backgroundColor: MyTheme.whiteColor,
+                 color: MyTheme.yellowColor,
+              )),
+              errorWidget: (context, url, error) => const Icon(Icons.error,color: MyTheme.yellowColor,
+              ),
+            ),
           ),
-        ),
-        const SizedBox(height: 10,),
-        Center(
-          child: Text(
-            movies.originalTitle??"",
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: MyTheme.whiteColor),
+          const SizedBox(height: 10,),
+          Center(
+            child: Text(
+              movies.originalTitle??"",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: MyTheme.whiteColor),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

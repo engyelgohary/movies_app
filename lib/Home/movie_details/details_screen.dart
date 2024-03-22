@@ -48,7 +48,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           centerTitle: true,
           title: Text(widget.movieName
           ,style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: MyTheme.whiteColor,fontWeight:FontWeight.bold,fontSize: 20),),
-          backgroundColor: Colors.transparent,
+          backgroundColor: MyTheme.bottomColor,
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -177,12 +177,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ),
                                 ),
                                 errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
+                                    const Icon(Icons.error,color: MyTheme.yellowColor,),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
                                   right: 10,
-                                  top: 10,
                                 ),
                                 child: InkWell(
                                     onTap: () {},
