@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/api_manger.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:movies_app/Home/movie_details/details_screen.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 
 class PopularItems extends StatefulWidget {
@@ -53,11 +55,19 @@ class _PopularItemsState extends State<PopularItems> {
     if (posterPath != null && posterPath.isNotEmpty) {
       return Stack(
         children: [
-          CachedNetworkImage(
-            imageUrl: 'https://image.tmdb.org/t/p/w500$posterPath',
-            fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height*.23,
-            width: MediaQuery.of(context).size.width,
+          InkWell(
+              // onTap: () {
+              //         Navigator.push(context,
+              //          MaterialPageRoute(builder: (context) =>
+              //           DetailsScreen(movieId:),));
+              //       },
+           
+            child: CachedNetworkImage(
+              imageUrl: 'https://image.tmdb.org/t/p/w500$posterPath',
+              fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height*.23,
+              width: MediaQuery.of(context).size.width,
+            ),
           ),
           Positioned.fill(
             bottom: 100,
@@ -132,16 +142,22 @@ class _PopularItemsState extends State<PopularItems> {
                       left: 13,
                       child: Stack(
                         children: [
-                          Container(
-                            height: 150,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  'https://image.tmdb.org/t/p/w500$posterPath',
+                          InkWell(
+                            onTap: () {
+                  Navigator.push(context, CupertinoPageRoute
+                  (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],)));
+                            },
+                            child: Container(
+                              height: 150,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    'https://image.tmdb.org/t/p/w500$posterPath',
+                                  ),
+                                  fit: BoxFit.fill,
                                 ),
-                                fit: BoxFit.fill,
                               ),
                             ),
                           ),

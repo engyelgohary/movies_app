@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/upcoming_api.dart';
+import 'package:movies_app/Home/movie_details/details_screen.dart';
 import 'package:movies_app/Model/upcomingfilm.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 import 'upcoming_item.dart';
@@ -72,7 +73,11 @@ class _UpComing_detialsState extends State<UpComing_details> {
            height: MediaQuery.of(context).size.height*.27,
 
           child: ListView.builder(itemBuilder: (context, index) {
-            return UpcomingItem(res: filmList[index]);
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder:(context) => DetailsScreen(movieId: filmList[index].id!),));
+              },
+              child: UpcomingItem(res: filmList[index]));
           },
             itemCount: filmList.length,
             scrollDirection: Axis.horizontal,
