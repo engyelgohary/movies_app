@@ -9,7 +9,7 @@ import 'package:movies_app/Home/similar/similar_widget.dart';
 import 'package:movies_app/Model/movie_details_model.dart';
 import 'package:movies_app/Model/smiler_model.dart';
 import 'package:movies_app/Theme/mytheme.dart';
-import 'package:movies_app/widgets/custom_bookmark.dart';
+// import 'package:movies_app/widgets/custom_bookmark.dart';
 
 class DetailsScreen extends StatefulWidget {
   int movieId;
