@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/Api/search_api.dart';
 import 'package:movies_app/Home/movie_details/details_screen.dart';
 
-import 'package:movies_app/Model/search_model.dart';
 
 import 'package:movies_app/Theme/mytheme.dart';
+
+import '../model/search_model.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -125,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                      right: 15,
+                                      right: 10,
                                       // top: 1,
                                     ),
                                     child: InkWell(

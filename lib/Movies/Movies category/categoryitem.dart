@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/api_manger.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 import 'package:movies_app/Movies/discover/discover_item.dart';
-
+import '../../Home/movie_details/details_screen.dart';
 import '../../Model/MovieDiscover.dart';
 
 
@@ -79,7 +80,15 @@ class _CategoryItemState extends State<CategoryItem> {
                   ),
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    return DiscoverMovieItem(movies: snapshot.data![index]);
+                    return InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              CupertinoPageRoute(builder: (context) => DetailsScreen(
+                                movieId:snapshot.data![index].id!,movieName:snapshot.data![index].originalTitle!,
+
+                              ),));
+                        },
+                        child: DiscoverMovieItem(movies: snapshot.data![index]));
                   },
                 ),
               );

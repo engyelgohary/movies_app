@@ -2,10 +2,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:movies_app/Home/movie_details/details_screen.dart';
-import 'package:movies_app/Model/search_model.dart';
 import 'package:movies_app/Theme/mytheme.dart';
+import '../model/search_model.dart';
 
 class ViewSearchScreen extends StatelessWidget {
 SearchModel? searchModel;

@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:math';
-
-import 'package:movies_app/Api/toprated_api.dart';
-import 'package:movies_app/Model/search_model.dart';
 import 'package:http/http.dart' as http;
+import '../model/search_model.dart';
 
 class SearchApi {
   static Future<SearchModel> getSearchMovies(String query) async {

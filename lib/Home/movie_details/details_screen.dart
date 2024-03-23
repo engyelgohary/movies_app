@@ -182,6 +182,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                   right: 10,
+                                  top: 7,
                                 ),
                                 child: InkWell(
                                     onTap: () {},
