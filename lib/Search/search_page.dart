@@ -123,19 +123,7 @@ class _SearchPageState extends State<SearchPage> {
                                       color: MyTheme.grayColor,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 15,
-                                      // top: 1,
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {},
-                                      child: Image.asset(
-                                        'assets/images/bookmark.png',
-                                        height: 30,
-                                      ),
-                                    ),
-                                  ),
+
                                 ]),
                                 SizedBox(
                                   width:

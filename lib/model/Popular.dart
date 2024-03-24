@@ -55,6 +55,7 @@ class Popular {
 /// vote_count : 203
 
 class Results {
+  static const String collectionName = 'Films';
   Results({
       this.adult, 
       this.backdropPath, 

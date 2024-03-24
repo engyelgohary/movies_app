@@ -55,6 +55,7 @@ class MovieDiscover {
 /// vote_count : 798
 
 class Results {
+  static const String collectionName = 'Films';
   Results({
       this.adult, 
       this.backdropPath, 
