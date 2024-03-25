@@ -205,11 +205,15 @@ class _PopularItemsState extends State<PopularItems> {
                               left: 0,
                               child: InkWell(
                                 onTap: () {
-                                  _toggleBookmark(index);
+                                  if (index >= 0 && index < _isBookmarkedList.length) {
+                                    _toggleBookmark(index);
+                                  }
                                 },
-                                child: _isBookmarkedList[index]
+                                child: index >= 0 && index < _isBookmarkedList.length ?
+                                _isBookmarkedList[index]
                                     ? Image.asset('assets/images/select.png')
-                                    : Image.asset('assets/images/bookmark.png'),
+                                    : Image.asset('assets/images/bookmark.png')
+                                    : const SizedBox(),
                               ),
                             ),
                           ],
