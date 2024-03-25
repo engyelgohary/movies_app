@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/movie_details_api.dart';
 import 'package:movies_app/Api/toprated_api.dart';
-
 import 'package:movies_app/Home/similar/Similar_item.dart';
 import 'package:movies_app/Home/similar/similar_widget.dart';
 import 'package:movies_app/Model/movie_details_model.dart';
@@ -26,6 +25,7 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  bool isBookmarked = false;
   MovieDetailsApi movieDetailsApi = MovieDetailsApi();
   late Future<MovieDetailsModel> movieDetails;
 
@@ -164,31 +164,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           // mainAxisAlignment: MainAxisAlignment.spaceEvenly
 
                           children: [
-                            Stack(children: [
-                              CachedNetworkImage(
-                                imageUrl:
-                                    'https://image.tmdb.org/t/p/w500${movie?.posterPath}',
-                                width: MediaQuery.of(context).size.width * .4,
-                                height: MediaQuery.of(context).size.height * .3,
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: MyTheme.whiteColor,
-                                    color: MyTheme.yellowColor,
-                                  ),
+                            CachedNetworkImage(
+                              imageUrl:
+                                  'https://image.tmdb.org/t/p/w500${movie?.posterPath}',
+                              width: MediaQuery.of(context).size.width * .4,
+                              height: MediaQuery.of(context).size.height * .3,
+                              placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: MyTheme.whiteColor,
+                                  color: MyTheme.yellowColor,
                                 ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error,color: MyTheme.yellowColor,),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 10,
-                                ),
-                                child: InkWell(
-                                    onTap: () {},
-                                    child: Image.asset(
-                                        'assets/images/bookmark.png')),
-                              ),
-                            ]),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error,color: MyTheme.yellowColor,),
+                            ),
                             const SizedBox(
                               width: 15,
                             ),
@@ -245,4 +234,5 @@ class _DetailsScreenState extends State<DetailsScreen> {
               }),
         ));
   }
+
 }
