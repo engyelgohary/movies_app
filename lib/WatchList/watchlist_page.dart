@@ -29,9 +29,18 @@ class WatchlistPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
+          }
+          else {
             final films = snapshot.data!;
-            return ListView.builder(
+            return 
+              films.isEmpty 
+                  ?
+                  Center(
+                 child: Text('No Films in WatchList Now',style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: MyTheme.whiteColor, fontSize: 24),))
+              : ListView.builder(
               itemCount: films.length,
               itemBuilder: (context, index) {
                 final film = films[index];
