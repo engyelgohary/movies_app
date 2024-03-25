@@ -1,20 +1,33 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:movies_app/Theme/mytheme.dart';
 
-class CustomFilmWidget extends StatelessWidget {
+class CustomFilmWidget extends StatefulWidget {
 String imagePath;
 String? voteAverage;
 String ?title;
 String? releaseDate;
-   CustomFilmWidget({
-    Key? key,
+Function bookMarkClicked;
+//bool isBookmarked;
+  CustomFilmWidget({
+    //required this.isBookmarked,
+   
     required this.imagePath,
-     this.voteAverage,
+    this.voteAverage,
      this.title,
-     this.releaseDate,
-  }) : super(key: key);
+    this.releaseDate,
+    required this.bookMarkClicked,
+  }) ;
+
+  @override
+  State<CustomFilmWidget> createState() => _CustomFilmWidgetState();
+}
+  bool isBookmarked= false;
+
+class _CustomFilmWidgetState extends State<CustomFilmWidget> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +56,7 @@ String? releaseDate;
                           BorderRadius.vertical(top: Radius.circular(8)),
                       child: CachedNetworkImage(
                         imageUrl:
-                            imagePath,
+                            widget.imagePath,
                         placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(
                             backgroundColor: MyTheme.whiteColor,
@@ -53,10 +66,13 @@ String? releaseDate;
                         errorWidget: (context, url, error) =>
                             Center(child: const Icon(Icons.error,size: 50,color: MyTheme.grayColor,)),
                       )),
-                  InkWell(
-                      onTap: () {
-                      },
-                      child: Image.asset('assets/images/bookmark.png')),
+                InkWell(
+              onTap: () {
+                widget.bookMarkClicked;
+              },
+              child: isBookmarked
+                  ? Image.asset('assets/images/select.png')
+                  : Image.asset('assets/images/bookmark.png'),),
                 ],
               ),
               const SizedBox(
@@ -75,7 +91,7 @@ String? releaseDate;
                       width: 5,
                     ),
                     Text(
-                      voteAverage??'',
+                      widget.voteAverage??'',
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
@@ -90,7 +106,7 @@ String? releaseDate;
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Text(
-                  title??'',
+                  widget.title??'',
                   maxLines: 2,
                   style: Theme.of(context)
                       .textTheme
@@ -104,7 +120,7 @@ String? releaseDate;
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Text(
-                  releaseDate??'',
+                  widget.releaseDate??'',
                   textAlign: TextAlign.end,
                   style: TextStyle(fontSize: 10, color: MyTheme.whiteColor),
                 ),
@@ -113,7 +129,10 @@ String? releaseDate;
           ),
         ),
       ),
+      
     );
   
   }
+
+  // 
 }
