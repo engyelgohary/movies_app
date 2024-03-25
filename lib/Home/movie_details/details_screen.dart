@@ -8,7 +8,6 @@ import 'package:movies_app/Home/similar/similar_widget.dart';
 import 'package:movies_app/Model/movie_details_model.dart';
 import 'package:movies_app/Model/smiler_model.dart';
 import 'package:movies_app/Theme/mytheme.dart';
-import 'package:movies_app/firebase/Firebase_details.dart';
 
 class DetailsScreen extends StatefulWidget {
   int movieId;
@@ -43,7 +42,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isBookmarked = false;
     return Scaffold(
         backgroundColor: MyTheme.backgroundColor,
         appBar: AppBar(
@@ -166,35 +164,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           // mainAxisAlignment: MainAxisAlignment.spaceEvenly
 
                           children: [
-                            Stack(children: [
-                              CachedNetworkImage(
-                                imageUrl:
-                                    'https://image.tmdb.org/t/p/w500${movie?.posterPath}',
-                                width: MediaQuery.of(context).size.width * .4,
-                                height: MediaQuery.of(context).size.height * .3,
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: MyTheme.whiteColor,
-                                    color: MyTheme.yellowColor,
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error,color: MyTheme.yellowColor,),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 10,
-                                ),
-                                child: InkWell(
-                                    onTap: () {
-                                      _toggleBookmark();
-                                    },
-                                    child: isBookmarked == true ?
-                                        Image.asset('assets/images/select.png'):
-                                        Image.asset('assets/images/bookmark.png')
+                            CachedNetworkImage(
+                              imageUrl:
+                                  'https://image.tmdb.org/t/p/w500${movie?.posterPath}',
+                              width: MediaQuery.of(context).size.width * .4,
+                              height: MediaQuery.of(context).size.height * .3,
+                              placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: MyTheme.whiteColor,
+                                  color: MyTheme.yellowColor,
                                 ),
                               ),
-                            ]),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error,color: MyTheme.yellowColor,),
+                            ),
                             const SizedBox(
                               width: 15,
                             ),
@@ -251,31 +234,5 @@ class _DetailsScreenState extends State<DetailsScreen> {
               }),
         ));
   }
-  void _toggleBookmark() {
-    isBookmarked = ! isBookmarked;
-    if (isBookmarked) {
-      setState(() {
-        MovieDetailsModel result = MovieDetailsModel(
-            id: widget.model?.id,
-            title: widget
-                .model?.title,
-            posterPath: widget
-                .model?.posterPath,
-            releaseDate: widget
-                .model?.releaseDate
-        );
-        FirebaseUtilsDetials.addFilmToFireStore(
-            result:result).then((value) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(
-              SnackBar(
-                content: Text(
-                    'Film Added Successfully.'),
-              )
-          );
-        }
-        );
-      });
-    }
-  }
+
 }
