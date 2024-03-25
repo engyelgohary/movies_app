@@ -49,7 +49,8 @@ class CustomBookMark
             Padding(
               padding: const EdgeInsets.all(10),
               child: InkWell(
-                onTap: (){},
+                onTap: (){
+                },
                   child: Positioned(
                     height: height,
                     width: width,

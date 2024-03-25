@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:movies_app/model/Popular.dart';
 
-class FirebaseUtils {
+import '../Model/upcomingfilm.dart';
+
+class FirebaseUtilsUpComingSec {
 
   static CollectionReference<Results> getFilmCollection() {
-    return FirebaseFirestore.instance.collection(Results.collectionName)
+    return FirebaseFirestore.instance.collection('Films')
         .withConverter<Results>
       (
         fromFirestore: ((snapshot, options) =>

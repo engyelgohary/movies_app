@@ -18,7 +18,6 @@ class SimilarItem extends StatelessWidget {
            voteAverage: (similarRes.voteAverage ?? 0).toStringAsFixed(1),
             title: similarRes.title??'',
              releaseDate: similarRes.releaseDate??''
-  
     );
   }
 }

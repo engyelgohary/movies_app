@@ -3,12 +3,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/movie_details_api.dart';
 import 'package:movies_app/Api/toprated_api.dart';
-
 import 'package:movies_app/Home/similar/Similar_item.dart';
 import 'package:movies_app/Home/similar/similar_widget.dart';
 import 'package:movies_app/Model/movie_details_model.dart';
 import 'package:movies_app/Model/smiler_model.dart';
 import 'package:movies_app/Theme/mytheme.dart';
+import 'package:movies_app/firebase/Firebase_details.dart';
 
 class DetailsScreen extends StatefulWidget {
   int movieId;
@@ -26,6 +26,7 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  bool isBookmarked = false;
   MovieDetailsApi movieDetailsApi = MovieDetailsApi();
   late Future<MovieDetailsModel> movieDetails;
 
@@ -42,6 +43,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isBookmarked = false;
     return Scaffold(
         backgroundColor: MyTheme.backgroundColor,
         appBar: AppBar(
@@ -184,9 +186,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   right: 10,
                                 ),
                                 child: InkWell(
-                                    onTap: () {},
-                                    child: Image.asset(
-                                        'assets/images/bookmark.png')),
+                                    onTap: () {
+                                      _toggleBookmark();
+                                    },
+                                    child: isBookmarked == true ?
+                                        Image.asset('assets/images/select.png'):
+                                        Image.asset('assets/images/bookmark.png')
+                                ),
                               ),
                             ]),
                             const SizedBox(
@@ -244,5 +250,32 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 }
               }),
         ));
+  }
+  void _toggleBookmark() {
+    isBookmarked = ! isBookmarked;
+    if (isBookmarked) {
+      setState(() {
+        MovieDetailsModel result = MovieDetailsModel(
+            id: widget.model!.id,
+            title: widget
+                .model!.title,
+            posterPath: widget
+                .model!.posterPath,
+            releaseDate: widget
+                .model!.releaseDate
+        );
+        FirebaseUtilsDetials.addFilmToFireStore(
+            result: result).then((value) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(
+              SnackBar(
+                content: Text(
+                    'Film Added Successfully.'),
+              )
+          );
+        }
+        );
+      });
+    }
   }
 }
