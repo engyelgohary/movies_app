@@ -256,16 +256,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
     if (isBookmarked) {
       setState(() {
         MovieDetailsModel result = MovieDetailsModel(
-            id: widget.model!.id,
+            id: widget.model?.id,
             title: widget
-                .model!.title,
+                .model?.title,
             posterPath: widget
-                .model!.posterPath,
+                .model?.posterPath,
             releaseDate: widget
-                .model!.releaseDate
+                .model?.releaseDate
         );
         FirebaseUtilsDetials.addFilmToFireStore(
-            result: result).then((value) {
+            result:result).then((value) {
           ScaffoldMessenger.of(context)
               .showSnackBar(
               SnackBar(
