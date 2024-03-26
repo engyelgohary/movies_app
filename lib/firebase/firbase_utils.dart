@@ -7,8 +7,13 @@ class FirebaseUtils {
   }
 
   static Future<DocumentReference> addFilmToFirestore(Map<String, dynamic> filmData) async {
-    return getFilmCollection().add(filmData);
-  }
+    CollectionReference filmsCollection = getFilmCollection();
+
+    DocumentReference newDocRef = await filmsCollection.add(filmData);
+
+    await newDocRef.update({'backdropPath': newDocRef.id});
+
+    return newDocRef;  }
 
   static Future<void> deleteFilm(String filmId) async {
     try {
@@ -54,6 +59,15 @@ class FirebaseUtils {
   }
 
   static Future<void> storeDataInFirestore(Map<String, dynamic> filmsData) async {
+  }
+
+  static Future<void> deleteFilm(String filmId) async {
+    try {
+      await getFilmCollection().doc(filmId).delete();
+    } catch (e) {
+      print('Error deleting film: $e');
+      throw e; // Re-throw the error to handle it wherever you call this method
+    }
   }
 
 }
