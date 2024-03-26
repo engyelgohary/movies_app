@@ -103,41 +103,26 @@ class _SearchPageState extends State<SearchPage> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Stack(children: [
-                                  CachedNetworkImage(
-                                    imageUrl:
-                                        "https://image.tmdb.org/t/p/w500${searchModel!.results?[index].posterPath}",
-                                    height: MediaQuery.of(context).size.height *
-                                        .20,
-                                    width:
-                                        MediaQuery.of(context).size.width * .30,
-                                    placeholder: (context, url) => const Center(
-                                      child: CircularProgressIndicator(
-                                        backgroundColor: MyTheme.whiteColor,
-                                        color: MyTheme.yellowColor,
-                                      ),
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        const Icon(
-                                      Icons.error,
-                                      size: 50,
-                                      color: MyTheme.grayColor,
+                                CachedNetworkImage(
+                                  imageUrl:
+                                      "https://image.tmdb.org/t/p/w500${searchModel!.results?[index].posterPath}",
+                                  height: MediaQuery.of(context).size.height *
+                                      .20,
+                                  width:
+                                      MediaQuery.of(context).size.width * .30,
+                                  placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: MyTheme.whiteColor,
+                                      color: MyTheme.yellowColor,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 10,
-                                      // top: 1,
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {},
-                                      child: Image.asset(
-                                        'assets/images/bookmark.png',
-                                        height: 30,
-                                      ),
-                                    ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                    Icons.error,
+                                    size: 50,
+                                    color: MyTheme.grayColor,
                                   ),
-                                ]),
+                                ),
                                 SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * .05,

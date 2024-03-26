@@ -164,32 +164,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           // mainAxisAlignment: MainAxisAlignment.spaceEvenly
 
                           children: [
-                            Stack(children: [
-                              CachedNetworkImage(
-                                imageUrl:
-                                    'https://image.tmdb.org/t/p/w500${movie?.posterPath}',
-                                width: MediaQuery.of(context).size.width * .4,
-                                height: MediaQuery.of(context).size.height * .3,
-                                placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: MyTheme.whiteColor,
-                                    color: MyTheme.yellowColor,
-                                  ),
+                            CachedNetworkImage(
+                              imageUrl:
+                                  'https://image.tmdb.org/t/p/w500${movie?.posterPath}',
+                              width: MediaQuery.of(context).size.width * .4,
+                              height: MediaQuery.of(context).size.height * .3,
+                              placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(
+                                  backgroundColor: MyTheme.whiteColor,
+                                  color: MyTheme.yellowColor,
                                 ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error,color: MyTheme.yellowColor,),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 10,
-                                  top: 7,
-                                ),
-                                child: InkWell(
-                                    onTap: () {},
-                                    child: Image.asset(
-                                        'assets/images/bookmark.png')),
-                              ),
-                            ]),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error,color: MyTheme.yellowColor,),
+                            ),
                             const SizedBox(
                               width: 15,
                             ),
