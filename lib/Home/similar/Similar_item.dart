@@ -20,7 +20,7 @@ class SimilarItem extends StatefulWidget {
 }
 
 class _SimilarItemState extends State<SimilarItem> {
-  bool bookmarked= false;
+  bool isBookmarked= false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +61,9 @@ class _SimilarItemState extends State<SimilarItem> {
                       )),
                   InkWell(
                     onTap: () {
-                      _bookMarkClicked();
+                      _toggleBookmark();
                     },
-                    child: bookmarked
+                    child: isBookmarked
                         ? Image.asset('assets/images/select.png')
                         : Image.asset('assets/images/bookmark.png'),),
                 ],
@@ -124,42 +124,54 @@ class _SimilarItemState extends State<SimilarItem> {
       ),
       
     );
-  
-  
-    
 
   }
-    void   _bookMarkClicked() {
-      bookmarked = ! bookmarked;
-      if (bookmarked) {
-        setState(() {
-          SimilarResults result = SimilarResults(
-              id: widget.similarRes.id,
-              title: widget
-                  .similarRes.title,
-              posterPath: widget
-                  .similarRes.posterPath,
-              releaseDate: widget
-                  .similarRes.releaseDate
+  void _toggleBookmark() {
+    setState(() {
+      // Toggle the bookmark status
+      isBookmarked = !isBookmarked;
+
+      if (isBookmarked) {
+        // Adding the film to Firestore
+        SimilarResults result = SimilarResults(
+          title: widget.similarRes.title,
+          posterPath: widget.similarRes.posterPath,
+          releaseDate: widget.similarRes.releaseDate,
+        );
+        FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Film Added Successfully to Watchlist.'),
+            ),
           );
-          FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Film Added Successfully.'),
-              ),
-            );
-          }).catchError((error) {
-            print('Error adding film to Firestore: $error');
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Failed to add film.'),
-              ),
-            );
-          });
-
+        }).catchError((error) {
+          print('Error adding film to Firestore: $error');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to add film.'),
+            ),
+          );
         });
-
+      }  else {
+        String filmTitle = widget.similarRes.title??"";
+        FirebaseUtils.getFilmId(filmTitle).then((filmId) {
+          if (filmId != null) {
+            FirebaseUtils.deleteFilm(filmId).then((value) {
+              print('Film Deleted Successfully');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Film Removed Successfully.'),
+                ),
+              );
+            }).catchError((error) {
+              print('Error deleting film: $error');
+            });
+          } else {
+            print('Film not found in database.');
+          }
+        });
       }
-    }
+    });
+  }
 }
 

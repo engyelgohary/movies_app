@@ -87,37 +87,50 @@ class _PopularItemsState extends State<PopularItems> {
 
   @override
   Widget build(BuildContext context) {
-      void _toggleBookmark(index) {
-        _isBookmarkedList[index] =
-        !_isBookmarkedList[index];
-        if (_isBookmarkedList[index]) {
-          setState(() {
-            Results result = Results(
-                id: widget.movies[index]['id'],
-                title: widget
-                    .movies[index]['title'],
-                posterPath: widget
-                    .movies[index]['poster_path'],
-                releaseDate: widget
-                    .movies[index]['release_date']
-            );
-            FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Film Added Successfully.'),
-                ),
-              );
-            }).catchError((error) {
-              print('Error adding film to Firestore: $error');
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Failed to add film.'),
-                ),
-              );
-            });
+    void _toggleBookmark(index) {
+      setState(() {
+        _isBookmarkedList[index] = !_isBookmarkedList[index];
 
+        if (_isBookmarkedList[index]) {
+          Results result = Results(
+            title: widget.movies[index]['title'],
+            posterPath: widget.movies[index]['poster_path'],
+            releaseDate: widget.movies[index]['release_date'],
+          );
+          FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Film Added Successfully to Watchlist.'),
+              ),
+            );
+          }).catchError((error) {
+            print('Error adding film to Firestore: $error');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to add film.'),
+              ),
+            );
+          });
+        } else {
+          String filmTitle = widget.movies[index]['title'];
+          FirebaseUtils.getFilmId(filmTitle).then((filmId) {
+            if (filmId != null) {
+              FirebaseUtils.deleteFilm(filmId).then((value) {
+                print('Film Deleted Successfully');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Film Removed Successfully.'),
+                  ),
+                );
+              }).catchError((error) {
+                print('Error deleting film: $error');
+              });
+            } else {
+              print('Film not found in database.');
+            }
           });
         }
+      });
     }
     return Stack(
       children: [
@@ -215,8 +228,14 @@ class _PopularItemsState extends State<PopularItems> {
                                 },
                                 child: index >= 0 && index < _isBookmarkedList.length ?
                                 _isBookmarkedList[index]
-                                    ? Image.asset('assets/images/select.png')
-                                    : Image.asset('assets/images/bookmark.png')
+                                    ? GestureDetector(
+                                  onTap: () => _toggleBookmark(index),
+                                  child: Image.asset('assets/images/select.png'),
+                                )
+                                    : GestureDetector(
+                                  onTap: () => _toggleBookmark(index),
+                                  child: Image.asset('assets/images/bookmark.png'),
+                                )
                                     : const SizedBox(),
                               ),
                             ),

@@ -34,7 +34,10 @@ class WatchlistPage extends StatelessWidget {
             final films = snapshot.data!.docs;
 
             if (films.isEmpty) {
-              return Center(child: Text('No Films in WatchList Now'));
+              return Center(child: Text('No Films in WatchList Now',style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: MyTheme.whiteColor, fontSize: 24),));
             } else {
               return ListView.builder(
                 itemCount: films.length,
@@ -62,7 +65,7 @@ class WatchlistPage extends StatelessWidget {
                                 ),
                                 InkWell(
                                     onTap: () {
-                                      FirebaseUtils.deleteFilm(film['backdropPath']).then((value) => {
+                                      FirebaseUtils.deleteFilm(film['id'].toString()).then((value) => {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                             SnackBar(

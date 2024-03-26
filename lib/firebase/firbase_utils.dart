@@ -11,7 +11,7 @@ class FirebaseUtils {
 
     DocumentReference newDocRef = await filmsCollection.add(filmData);
 
-    await newDocRef.update({'backdropPath': newDocRef.id});
+    await newDocRef.update({'id': newDocRef.id});
 
     return newDocRef;  }
 
@@ -61,7 +61,23 @@ class FirebaseUtils {
 
     return combinedData;
   }
+  static Future<String?> getFilmId(String filmTitle) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('films')
+          .where('title', isEqualTo: filmTitle)
+          .get();
 
+      if (querySnapshot.docs.isNotEmpty) {
+        return querySnapshot.docs.first.id;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching film ID: $e');
+      return null;
+    }
+  }
   static Future<void> storeDataInFirestore(Map<String, dynamic> filmsData) async {
   }
 
