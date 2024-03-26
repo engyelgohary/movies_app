@@ -5,6 +5,8 @@ import 'package:movies_app/Api/api_manger.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:movies_app/Home/movie_details/details_screen.dart';
 import 'package:movies_app/Theme/mytheme.dart';
+import 'package:movies_app/firebase/firbase_utils.dart';
+import 'package:movies_app/model/Popular.dart';
 
 class PopularItems extends StatefulWidget {
   final List<Map<String, dynamic>> movies;
@@ -19,7 +21,7 @@ class _PopularItemsState extends State<PopularItems> {
   int _page = 1;
   bool _isLoading = false;
   bool isBookmarked = false;
-  List<Map<String, dynamic>>? _movies;
+  List<bool> _isBookmarkedList = [];
 
   @override
   void initState() {
@@ -33,10 +35,8 @@ class _PopularItemsState extends State<PopularItems> {
     });
     var movies = await ApiManager.getMovies(page: _page);
     setState(() {
-      if (_movies == null) {
-        _movies = movies;
-      } else {
-        _movies!.addAll(movies!);
+      if (_isBookmarkedList.isEmpty) {
+        _isBookmarkedList = List.filled(movies!.length, false);
       }
       _isLoading = false;
     });
@@ -58,8 +58,14 @@ class _PopularItemsState extends State<PopularItems> {
           CachedNetworkImage(
             imageUrl: 'https://image.tmdb.org/t/p/w500$posterPath',
             fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height*.23,
-            width: MediaQuery.of(context).size.width,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * .23,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
           ),
           Positioned.fill(
             bottom: 100,
@@ -69,8 +75,7 @@ class _PopularItemsState extends State<PopularItems> {
                 size: 70,
                 color: Colors.white,
               ),
-              onPressed: () {
-              },
+              onPressed: () {},
             ),
           ),
         ],
@@ -82,6 +87,51 @@ class _PopularItemsState extends State<PopularItems> {
 
   @override
   Widget build(BuildContext context) {
+    void _toggleBookmark(index) {
+      setState(() {
+        _isBookmarkedList[index] = !_isBookmarkedList[index];
+
+        if (_isBookmarkedList[index]) {
+          Results result = Results(
+            title: widget.movies[index]['title'],
+            posterPath: widget.movies[index]['poster_path'],
+            releaseDate: widget.movies[index]['release_date'],
+          );
+          FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Film Added Successfully to Watchlist.'),
+              ),
+            );
+          }).catchError((error) {
+            print('Error adding film to Firestore: $error');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to add film.'),
+              ),
+            );
+          });
+        } else {
+          String filmTitle = widget.movies[index]['title'];
+          FirebaseUtils.getFilmId(filmTitle).then((filmId) {
+            if (filmId != null) {
+              FirebaseUtils.deleteFilm(filmId).then((value) {
+                print('Film Deleted Successfully');
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Film Removed Successfully.'),
+                  ),
+                );
+              }).catchError((error) {
+                print('Error deleting film: $error');
+              });
+            } else {
+              print('Film not found in database.');
+            }
+          });
+        }
+      });
+    }
     return Stack(
       children: [
         NotificationListener<ScrollNotification>(
@@ -99,18 +149,20 @@ class _PopularItemsState extends State<PopularItems> {
               String coverPath = widget.movies[index]['backdrop_path'];
 
               return InkWell(
-              onTap: () {
-        Navigator.push(context, CupertinoPageRoute
-          (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
-      },
+                onTap: () {
+                  Navigator.push(context, CupertinoPageRoute
+                    (builder: (context) =>
+                      DetailsScreen(movieId: widget.movies[index]['id'],
+                        movieName: widget.movies[index]['original_title'],)));
+                },
                 child: Container(
                   color: Colors.transparent,
                   child: Stack(
                     children: [
                       // Larger Movie Poster
-                         Positioned.fill(
-                          child: _buildPoster(coverPath, context),
-                        ),
+                      Positioned.fill(
+                        child: _buildPoster(coverPath, context),
+                      ),
 
                       Positioned(
                         top: 210,
@@ -144,8 +196,12 @@ class _PopularItemsState extends State<PopularItems> {
                           children: [
                             InkWell(
                               onTap: () {
-                    Navigator.push(context, CupertinoPageRoute
-                    (builder: (context) => DetailsScreen(movieId: widget.movies[index]['id'],movieName: widget.movies[index]['original_title'],)));
+                                Navigator.push(context, CupertinoPageRoute
+                                  (builder: (context) =>
+                                    DetailsScreen(
+                                      movieId: widget.movies[index]['id'],
+                                      movieName: widget
+                                          .movies[index]['original_title'],)));
                               },
                               child: Container(
                                 height: 150,
@@ -166,13 +222,21 @@ class _PopularItemsState extends State<PopularItems> {
                               left: 0,
                               child: InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    isBookmarked = !isBookmarked;
-                                  });
+                                  if (index >= 0 && index < _isBookmarkedList.length) {
+                                    _toggleBookmark(index);
+                                  }
                                 },
-                                child: isBookmarked
-                                    ? Image.asset('assets/images/select.png')
-                                    : Image.asset('assets/images/bookmark.png'),
+                                child: index >= 0 && index < _isBookmarkedList.length ?
+                                _isBookmarkedList[index]
+                                    ? GestureDetector(
+                                  onTap: () => _toggleBookmark(index),
+                                  child: Image.asset('assets/images/select.png'),
+                                )
+                                    : GestureDetector(
+                                  onTap: () => _toggleBookmark(index),
+                                  child: Image.asset('assets/images/bookmark.png'),
+                                )
+                                    : const SizedBox(),
                               ),
                             ),
                           ],
@@ -184,7 +248,10 @@ class _PopularItemsState extends State<PopularItems> {
               );
             },
             options: CarouselOptions(
-              height: MediaQuery.of(context).size.height * .35,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * .35,
               enlargeCenterPage: true,
               autoPlay: true,
               autoPlayInterval: const Duration(seconds: 5),
@@ -205,4 +272,6 @@ class _PopularItemsState extends State<PopularItems> {
           ),
       ],
     );
-  }}
+  }
+}
+
