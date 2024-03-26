@@ -61,7 +61,17 @@ class WatchlistPage extends StatelessWidget {
                                   ),
                                 ),
                                 InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      FirebaseUtils.deleteFilm(film['backdropPath']).then((value) => {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                  'Film removed Successfully.'),
+                                            )
+                                        )
+                                      });
+                                    },
                                     child:
                                     Image.asset('assets/images/select.png')),
                               ],
