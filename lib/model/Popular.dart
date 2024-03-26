@@ -5,9 +5,9 @@
 
 class Popular {
   Popular({
-      this.page, 
-      this.results, 
-      this.totalPages, 
+      this.page,
+      this.results,
+      this.totalPages,
       this.totalResults,});
 
   Popular.fromJson(dynamic json) {
@@ -55,20 +55,21 @@ class Popular {
 /// vote_count : 203
 
 class Results {
+  static const String collectionName = 'Films';
   Results({
-      this.adult, 
-      this.backdropPath, 
-      this.genreIds, 
-      this.id, 
-      this.originalLanguage, 
-      this.originalTitle, 
-      this.overview, 
-      this.popularity, 
-      this.posterPath, 
-      this.releaseDate, 
-      this.title, 
-      this.video, 
-      this.voteAverage, 
+      this.adult,
+      this.backdropPath,
+      this.genreIds,
+      this.id,
+      this.originalLanguage,
+      this.originalTitle,
+      this.overview,
+      this.popularity,
+      this.posterPath,
+      this.releaseDate,
+      this.title,
+      this.video,
+      this.voteAverage,
       this.voteCount,});
 
   Results.fromJson(dynamic json) {

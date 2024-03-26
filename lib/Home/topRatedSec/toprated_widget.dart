@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Home/movie_details/details_screen.dart';
 import 'package:movies_app/Theme/mytheme.dart';
+import 'package:movies_app/model/toprated.dart';
 import '../../Api/toprated_api.dart';
-import '../../model/toprated.dart';
 import 'toprated_item.dart';
 
 
@@ -82,10 +82,9 @@ class _TopRatedWidgetState extends State<TopRatedWidget> {
                       Navigator.push(context,
                        CupertinoPageRoute(builder: (context) => DetailsScreen(
                         movieId:data[index].id!,movieName: data[index].originalTitle!,
-                        
                         ),));
                     },
-                    child: TopRatedItem(results: data[index],));
+                    child: TopRatedItem(results:data[index] ));
                 },),
             ),
           ],
