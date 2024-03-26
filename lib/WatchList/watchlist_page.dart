@@ -23,8 +23,8 @@ class WatchlistPage extends StatelessWidget {
               .copyWith(color: MyTheme.whiteColor, fontSize: 24),
         ),
       ),
-      body: FutureBuilder<QuerySnapshot>(
-        future: FirebaseUtils.getFilmCollection().get(),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseUtils.getFilmCollection().snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
