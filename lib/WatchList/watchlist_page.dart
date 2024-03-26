@@ -86,10 +86,12 @@ class WatchlistPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     film['title'] ?? '',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .copyWith(color: MyTheme.whiteColor),
+                                     maxLines: 2,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                          color: MyTheme.whiteColor),
                                   ),
                                   Text(
                                       film['release_date'] ?? '',
