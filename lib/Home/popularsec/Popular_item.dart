@@ -114,11 +114,8 @@ class _PopularItemsState extends State<PopularItems> {
                   content: Text('Failed to add film.'),
                 ),
               );
+            });
 
-
-
-            }
-            );
           });
         }
     }

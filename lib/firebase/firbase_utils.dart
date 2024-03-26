@@ -10,6 +10,14 @@ class FirebaseUtils {
     return getFilmCollection().add(filmData);
   }
 
+  static Future<void> deleteFilm(String filmId) async {
+    try {
+      await getFilmCollection().doc(filmId).delete();
+    } catch (e) {
+      print('Error deleting film: $e');
+      throw e; // Re-throw the error to handle it wherever you call this method
+    }
+  }
   static Future<void> fetchAndStoreDataFromAPIs() async {
     var popularData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/popular');
 
