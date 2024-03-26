@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/Movies/Movies%20category/categorydetails.dart';
-import 'package:movies_app/Movies/discover/discover_screen.dart';
 import 'package:movies_app/Theme/mytheme.dart';
-import 'package:movies_app/model/ListsMovies.dart';
 
 class MoviesPage extends StatefulWidget {
   @override
