@@ -20,18 +20,22 @@ class FirebaseUtils {
       await getFilmCollection().doc(filmId).delete();
     } catch (e) {
       print('Error deleting film: $e');
-      throw e; // Re-throw the error to handle it wherever you call this method
+      throw e;
     }
   }
   static Future<void> fetchAndStoreDataFromAPIs() async {
-    var popularData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/popular');
-
-    var upcomingData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/upcoming');
-
-    var topRatedData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/top_rated');
-
+    try {
+      var popularData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/popular');
+      var upcomingData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/upcoming');
+      var topRatedData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/top_rated');
+      var similarData = await fetchDataFromAPI('https://api.themoviedb.org/3/movie/{movie_id}/similar');
+      var processedData = processData(popularData, upcomingData, topRatedData, similarData);
+      await storeDataInFirestore(processedData);
+    } catch (e) {
+      print('Error fetching and storing data: $e');
+      throw e;
+    }
   }
-
   static Future<Map<String, dynamic>> fetchDataFromAPI(String apiUrl) async {
     try {
       var response = await http.get(Uri.parse(apiUrl));
@@ -47,12 +51,12 @@ class FirebaseUtils {
     }
   }
 
-  static Map<String, dynamic> processData(Map<String, dynamic> popularData, Map<String, dynamic> upcomingData, Map<String, dynamic> topRatedData) {
-    // Perform processing on the data and combine them into a single map
+  static Map<String, dynamic> processData(Map<String, dynamic> popularData, Map<String, dynamic> upcomingData, Map<String, dynamic> topRatedData, Map<String, dynamic> similarData) {
     Map<String, dynamic> combinedData = {
       'popular': popularData,
       'upcoming': upcomingData,
       'topRated': topRatedData,
+      'similar':similarData
     };
 
     return combinedData;
@@ -61,14 +65,7 @@ class FirebaseUtils {
   static Future<void> storeDataInFirestore(Map<String, dynamic> filmsData) async {
   }
 
-  static Future<void> deleteFilm(String filmId) async {
-    try {
-      await getFilmCollection().doc(filmId).delete();
-    } catch (e) {
-      print('Error deleting film: $e');
-      throw e; // Re-throw the error to handle it wherever you call this method
-    }
-  }
+
 
 }
 

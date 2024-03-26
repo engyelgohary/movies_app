@@ -124,8 +124,6 @@ class _TopRatedItemState extends State<TopRatedItem> {
       ),
       
     );
-  
-
   }
      void  _bookMarkClicked() {
       bookmarked = ! bookmarked;

@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:movies_app/Model/smiler_model.dart';
-import 'package:movies_app/firebase/Firebase_similar.dart';
-import 'package:movies_app/widgets/custom_film_widget.dart';
+import 'package:movies_app/firebase/firbase_utils.dart';
 
 import '../../Theme/mytheme.dart';
 
@@ -21,6 +20,8 @@ class SimilarItem extends StatefulWidget {
 }
 
 class _SimilarItemState extends State<SimilarItem> {
+  bool bookmarked= false;
+
   @override
   Widget build(BuildContext context) {
      return Container(
@@ -58,13 +59,13 @@ class _SimilarItemState extends State<SimilarItem> {
                         errorWidget: (context, url, error) =>
                             Center(child: const Icon(Icons.error,size: 50,color: MyTheme.grayColor,)),
                       )),
-                InkWell(
-              onTap: () {
-                _bookMarkClicked();
-              },
-              child: isBookmarked
-                  ? Image.asset('assets/images/select.png')
-                  : Image.asset('assets/images/bookmark.png'),),
+                  InkWell(
+                    onTap: () {
+                      _bookMarkClicked();
+                    },
+                    child: bookmarked
+                        ? Image.asset('assets/images/select.png')
+                        : Image.asset('assets/images/bookmark.png'),),
                 ],
               ),
               const SizedBox(
@@ -126,16 +127,11 @@ class _SimilarItemState extends State<SimilarItem> {
   
   
     
-    // CustomFilmWidget(
-    //       imagePath: "https://image.tmdb.org/t/p/w500${similarRes.posterPath}",
-    //        voteAverage: (similarRes.voteAverage ?? 0).toStringAsFixed(1),
-    //         title: similarRes.title??'',
-    //          releaseDate: similarRes.releaseDate??''
-    // );
+
   }
     void   _bookMarkClicked() {
-      isBookmarked = ! isBookmarked;
-      if (isBookmarked) {
+      bookmarked = ! bookmarked;
+      if (bookmarked) {
         setState(() {
           SimilarResults result = SimilarResults(
               id: widget.similarRes.id,
@@ -146,18 +142,24 @@ class _SimilarItemState extends State<SimilarItem> {
               releaseDate: widget
                   .similarRes.releaseDate
           );
-          FirebaseUtilsDetials.addFilmToFireStore(
-              result: result).then((value) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(
-                const SnackBar(
-                  content: Text(
-                      'Film Added Successfully.'),
-                )
+          FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Film Added Successfully.'),
+              ),
             );
-          }
-          );
+          }).catchError((error) {
+            print('Error adding film to Firestore: $error');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to add film.'),
+              ),
+            );
+          });
+
         });
+
       }
     }
 }
+
