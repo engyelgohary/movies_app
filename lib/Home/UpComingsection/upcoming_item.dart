@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/Theme/mytheme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:movies_app/firebase/firebase_utilsUpcomingsec.dart';
+import 'package:movies_app/firebase/firbase_utils.dart';
 import '../../Model/upcomingfilm.dart';
 
 class UpcomingItem extends StatefulWidget {
@@ -68,18 +68,24 @@ class _UpcomingItemState extends State<UpcomingItem> {
               releaseDate: widget
                   .res.releaseDate
           );
-          FirebaseUtilsUpComingSec.addFilmToFireStore(
-              result: result).then((value) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(
-                const SnackBar(
-                  content: Text(
-                      'Film Added Successfully.'),
-                )
+          FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Film Added Successfully.'),
+              ),
             );
-          }
-          );
-        });
+          }).catchError((error) {
+            // التعامل مع الخطأ هنا
+            print('Error adding film to Firestore: $error');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to add film.'),
+              ),
+            );
+          });
+
+            });
+
       }
     }
   }

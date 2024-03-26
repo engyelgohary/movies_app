@@ -101,15 +101,22 @@ class _PopularItemsState extends State<PopularItems> {
                 releaseDate: widget
                     .movies[index]['release_date']
             );
-            FirebaseUtils.addFilmToFireStore(
-                result: result).then((value) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(
-                  SnackBar(
-                    content: Text(
-                        'Film Added Successfully.'),
-                  )
+            FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Film Added Successfully.'),
+                ),
               );
+            }).catchError((error) {
+              print('Error adding film to Firestore: $error');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Failed to add film.'),
+                ),
+              );
+
+
+
             }
             );
           });

@@ -2,7 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/toprated_api.dart';
-import 'package:movies_app/firebase/Firebase_topRated.dart';
+import 'package:movies_app/firebase/firbase_utils.dart';
 import 'package:movies_app/widgets/custom_film_widget.dart';
 import 'package:movies_app/model/toprated.dart';
 
@@ -140,18 +140,24 @@ class _TopRatedItemState extends State<TopRatedItem> {
               releaseDate: widget
                   .results.releaseDate
           );
-          FirebaseUtilsTopRatedSec.addFilmToFireStore(
-              result: result).then((value) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(
-                const SnackBar(
-                  content: Text(
-                      'Film Added Successfully.'),
-                )
+          FirebaseUtils.addFilmToFirestore(result.toJson()).then((value) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Film Added Successfully.'),
+              ),
             );
-          }
-          );
+          }).catchError((error) {
+            print('Error adding film to Firestore: $error');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to add film.'),
+              ),
+            );
+          });
+
         });
+
       }
-    }
+     }
 }
+
