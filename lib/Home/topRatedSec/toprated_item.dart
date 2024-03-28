@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/Api/toprated_api.dart';
 import 'package:movies_app/firebase/firbase_utils.dart';
-import 'package:movies_app/widgets/custom_film_widget.dart';
 import 'package:movies_app/model/toprated.dart';
 
 import '../../Theme/mytheme.dart';
